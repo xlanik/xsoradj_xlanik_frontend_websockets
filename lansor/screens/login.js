@@ -3,8 +3,10 @@ import { StyleSheet, View, Text, Button, TextInput, Alert, TouchableWithoutFeedb
 import NormalButton from '../components/normalButton';
 import ConfirmButton from '../components/confirmButton';
 
-  // Add URL to the server which will contain the server side setup
-  const ws = new WebSocket('ws://localhost:8082')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+
+
+// Add URL to the server which will contain the server side setup
+const ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 
 export default function Login({ navigation }) {
 
@@ -86,7 +88,7 @@ export default function Login({ navigation }) {
 
   
     try {
-      const response = await fetch(`https://wslansormtaa.herokuapp.com/login`, fetchObj);
+      const response = await fetch(`https://lansormtaa.herokuapp.com/login`, fetchObj);
       const userJsonRes = await response.json();
       console.log(userJsonRes);
      

@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Button, Alert} from 'react-native';
 import NormalButton from '../components/normalButton';
 import ConfirmButton from '../components/confirmButton';
 
-const ws = new WebSocket('ws://localhost:8082')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+const ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 
 export default function CustomerProfile({ navigation }) {
 
