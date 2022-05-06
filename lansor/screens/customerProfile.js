@@ -1,18 +1,70 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Button, Alert} from 'react-native';
 import NormalButton from '../components/normalButton';
 import ConfirmButton from '../components/confirmButton';
 
+const ws = new WebSocket('ws://localhost:8082')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+
 export default function CustomerProfile({ navigation }) {
 
   const customer = navigation.getParam('loginCustomer')
+
+  //https://blog.logrocket.com/how-to-implement-websockets-in-react-native/
+  //https://reactnative.dev/docs/network
+  //https://jaygould.co.uk/2021-02-25-using-websockets-react-native-node-js/
+  useEffect(() => {
+    initiateSocketConnection()
+  }, [])
+
+  const initiateSocketConnection = () => {
+
+    // When a connection is made to the server, send the user ID so we can track which
+    // socket belongs to which user
+    ws.onopen = () => {
+      console.log("Customer profile - soket otvoreny");
+    }
+
+    // Ran when teh app receives a message from the server
+    ws.onmessage = (e) => {
+      const message = (e.data)
+      const customerCars = JSON.parse(message);
+      console.log(customerCars);
+
+      try {
+        if(customerCars.message){  //prisla error sprava, nema zakazky
+          Alert.alert(
+            "Žiadne auto v servise",
+            "Momentálne nemáte autá u nás servisované.",
+            [
+              { text: "OK", onPress: () => console.log("Ziadne zakazky alert") }
+            ]
+          );
+
+          return;
+        }
+        
+        navigation.navigate('CustomerCarDetails', {'': customerCars.customerCars});   //musi sa to zabalit do objektu....
+  
+      } 
+      catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
+  const pressHandlerCarDetailsWS = async () => {
+    ws.send(JSON.stringify({ 
+      information: 'customerCars',
+      data: JSON.stringify(customer._id)
+    }));
+    return;
+  }
 
   const pressHandlerCarDetails = async () => {
     try {
 
         const response = await fetch(`https://lansormtaa.herokuapp.com/CustomerCar/${customer._id}`);
         const customersCarsJsonRes = await response.json();
-        //console.log(ordersJsonRes);
         
   
         if(customersCarsJsonRes.message){  //prisla error sprava, nema zakazky
@@ -29,11 +81,13 @@ export default function CustomerProfile({ navigation }) {
         
         navigation.navigate('CustomerCarDetails', {'': customersCarsJsonRes});   //musi sa to zabalit do objektu....
   
-      } catch (error) {
+      } 
+      catch (error) {
         console.error(error);
       }
   }
 
+  //vytvorenie objektu, kedze ako parameter sa daju posielat iba objekty
   const cust_id ={
     customer_id:customer._id,
   }
@@ -42,7 +96,7 @@ export default function CustomerProfile({ navigation }) {
     navigation.navigate('CustomerInitOrder',cust_id);
   }
 
-  const pressHandlerLogout = () => {  //skuska na tie data
+  const pressHandlerLogout = () => {  
     navigation.navigate('Login');
   }
 
@@ -70,6 +124,7 @@ export default function CustomerProfile({ navigation }) {
         </View>
 
         <ConfirmButton title={'Objednávka do servisu'} onPress={pressHandlerInitOrder}></ConfirmButton>
+        <NormalButton title={'Stav vozidiel v servise Websoket'} onPress={pressHandlerCarDetailsWS}></NormalButton>
         <NormalButton title={'Stav vozidiel v servise'} onPress={pressHandlerCarDetails}></NormalButton>
         <NormalButton title={'Odhlásiť sa'} onPress={pressHandlerLogout}></NormalButton>
       
