@@ -9,7 +9,7 @@ export default function CustomerProfile({ navigation }) {
   const pressHandlerOdrders = async () => {
     try {
 
-        const response = await fetch(`https://lansormtaa.herokuapp.com/TechnicianCars/${technician._id}`);
+        const response = await fetch(`https://wslansormtaa.herokuapp.com/TechnicianCars/${technician._id}`);
         const ordersJsonRes = await response.json();
         //console.log(ordersJsonRes);
         
@@ -36,7 +36,7 @@ export default function CustomerProfile({ navigation }) {
   const pressHandlerHistory = async () => {
     try {
 
-        const response = await fetch(`https://lansormtaa.herokuapp.com/RepairedCars`);
+        const response = await fetch(`https://wslansormtaa.herokuapp.com/RepairedCars`);
         const oderHistoryJsonRes = await response.json();
         //console.log(oderHistoryJsonRes);
        

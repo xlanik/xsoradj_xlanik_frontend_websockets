@@ -27,7 +27,7 @@ export default function TechnicianOrders( {navigation} ) {
 
     try {
 
-      const response = await fetch(`https://lansormtaa.herokuapp.com/Cars/${id}`, fetchObj);
+      const response = await fetch(`https://wslansormtaa.herokuapp.com/Cars/${id}`, fetchObj);
       const updateCarJsonRes = await response.json();
       console.log(updateCarJsonRes);
      

@@ -46,7 +46,7 @@ export default function Register( {navigation}) {
 
     try {
 
-      const response = await fetch(`https://lansormtaa.herokuapp.com/Customers`, fetchObj);
+      const response = await fetch(`https://wslansormtaa.herokuapp.com/Customers`, fetchObj);
       const userJsonRes = await response.json();
       console.log(userJsonRes.message);
 

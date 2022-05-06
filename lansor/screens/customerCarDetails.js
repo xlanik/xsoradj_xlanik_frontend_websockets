@@ -10,7 +10,7 @@ export default function CustomerCarDetails( {navigation} ) {
 
     try {
 
-      const response = await fetch(`https://lansormtaa.herokuapp.com/Cars/${car._id}`, {
+      const response = await fetch(`https://wslansormtaa.herokuapp.com/Cars/${car._id}`, {
         method: 'DELETE',
       });
 
@@ -52,7 +52,7 @@ export default function CustomerCarDetails( {navigation} ) {
     //console.log(postObj);
     
     try {
-      const response = await fetch(`https://lansormtaa.herokuapp.com/RepairedCars`, postObj);
+      const response = await fetch(`https://wslansormtaa.herokuapp.com/RepairedCars`, postObj);
       const carJsonRes = await response.json();
       console.log(carJsonRes);
     } catch (error) {

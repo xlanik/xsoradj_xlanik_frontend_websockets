@@ -21,7 +21,7 @@ export default function CustomerInitOrder({ navigation }) {
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);     //https://stackoverflow.com/questions/58243680/react-native-another-virtualizedlist-backed-container
         async function fetchTechnicians() {
             try{
-                let response = await fetch(`https://lansormtaa.herokuapp.com/technicians`)
+                let response = await fetch(`https://wslansormtaa.herokuapp.com/technicians`)
                 response = await response.json()
                 //console.log(response);
                 setTechnicians(response);

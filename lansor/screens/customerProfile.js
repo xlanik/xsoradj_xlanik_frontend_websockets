@@ -63,7 +63,7 @@ export default function CustomerProfile({ navigation }) {
   const pressHandlerCarDetails = async () => {
     try {
 
-        const response = await fetch(`https://lansormtaa.herokuapp.com/CustomerCar/${customer._id}`);
+        const response = await fetch(`https://wslansormtaa.herokuapp.com/CustomerCar/${customer._id}`);
         const customersCarsJsonRes = await response.json();
         
   

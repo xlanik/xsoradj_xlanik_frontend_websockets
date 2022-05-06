@@ -61,7 +61,7 @@ export default function CustomerImageUpload({ navigation }) {
     //console.log(postObj);
 
     try {
-      const response = await fetch(`https://lansormtaa.herokuapp.com/cars`, postObj);
+      const response = await fetch(`https://wslansormtaa.herokuapp.com/cars`, postObj);
       const carJsonRes = await response.json();
       //console.log(carJsonRes);
     } catch (error) {
