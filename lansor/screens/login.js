@@ -6,11 +6,13 @@ import ConfirmButton from '../components/confirmButton';
 
 
 // Add URL to the server which will contain the server side setup
-//const ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
-var ws = React.useRef(new WebSocket('wss://wslansormtaa.herokuapp.com')).current;
+//var ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+//var ws = React.useRef(new WebSocket('wss://wslansormtaa.herokuapp.com')).current;
+
 
 export default function Login({ navigation }) {
-
+  //var ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+  var ws = new WebSocket('ws://192.168.0.109:8082')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,6 +32,14 @@ export default function Login({ navigation }) {
     // When a connection is made to the server, send the user ID so we can track which
     // socket belongs to which user
     ws.onopen = () => {
+      /*const userCredentials = {
+        name: "zakyy",
+        password: "zak"
+      }
+      ws.send(JSON.stringify({ 
+        information: 'loginCustomer',
+        data: JSON.stringify(userCredentials)
+      }));*/
       console.log("Login - soket otvoreny");
     }
 

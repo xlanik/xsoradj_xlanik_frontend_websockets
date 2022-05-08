@@ -3,13 +3,14 @@ import { StyleSheet, View, Text, Button, Alert} from 'react-native';
 import NormalButton from '../components/normalButton';
 import ConfirmButton from '../components/confirmButton';
 
-//const ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
-var ws = React.useRef(new WebSocket('wss://wslansormtaa.herokuapp.com')).current;
-
+//var ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+//var ws = React.useRef(new WebSocket('wss://wslansormtaa.herokuapp.com')).current;
+var ws = new WebSocket('ws://192.168.0.109:8082')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 
 export default function CustomerProfile({ navigation }) {
-
+  //var ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
   const customer = navigation.getParam('loginCustomer')
+  //var ws = new WebSocket('ws://192.168.0.109:8082')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 
   //https://blog.logrocket.com/how-to-implement-websockets-in-react-native/
   //https://reactnative.dev/docs/network
