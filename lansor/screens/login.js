@@ -6,7 +6,8 @@ import ConfirmButton from '../components/confirmButton';
 
 
 // Add URL to the server which will contain the server side setup
-const ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+//const ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+var ws = React.useRef(new WebSocket('wss://wslansormtaa.herokuapp.com')).current;
 
 export default function Login({ navigation }) {
 
