@@ -10,7 +10,7 @@ import ConfirmButton from '../components/confirmButton';
 //var ws = React.useRef(new WebSocket('wss://wslansormtaa.herokuapp.com')).current;
 
 
-var ws = new WebSocket('ws://sheltered-coast-99005.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+var ws = new WebSocket('ws://sheltered-coast-99005.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 export default function Login({ navigation }) {
   //var ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
   const [name, setName] = useState('');
