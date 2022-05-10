@@ -31,6 +31,7 @@ export default function Login({ navigation }) {
 
     
     ws.onopen = () => {
+      //console.log(ws);
       console.log("Soket otvoreny");
     }
 

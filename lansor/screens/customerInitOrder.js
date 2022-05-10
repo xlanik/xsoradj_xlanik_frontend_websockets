@@ -46,6 +46,7 @@ export default function CustomerInitOrder({ navigation }) {
     }
 
     useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']); 
         /*const userCredentials = {
             name: name,
             password: password
