@@ -124,8 +124,7 @@ export default function Login({ navigation }) {
 
         <TextInput style={styles.input} placeholder="Prihlasovacie meno"  onChangeText={(value) => setName(value)} />
         <TextInput style={styles.input} placeholder="Heslo"   onChangeText={(value) => setPassword(value)} secureTextEntry={true} />
-        <ConfirmButton title={'Prihlásiť sa'} onPress={pressLoginHandle}></ConfirmButton>
-        <ConfirmButton title={'Prihlásiť sa WEBSOKET'} onPress={pressLoginHandleWS}></ConfirmButton>
+        <ConfirmButton title={'Prihlásiť sa'} onPress={pressLoginHandleWS}></ConfirmButton>
         <NormalButton title={'Registrácia'} onPress={pressHandlerRegister}></NormalButton>
       </View>
     </TouchableWithoutFeedback>

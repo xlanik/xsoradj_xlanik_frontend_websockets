@@ -127,8 +127,7 @@ export default function CustomerProfile({ navigation }) {
         </View>
 
         <ConfirmButton title={'Objednávka do servisu'} onPress={pressHandlerInitOrder}></ConfirmButton>
-        <NormalButton title={'Stav vozidiel v servise Websoket'} onPress={pressHandlerCarDetailsWS}></NormalButton>
-        <NormalButton title={'Stav vozidiel v servise'} onPress={pressHandlerCarDetails}></NormalButton>
+        <NormalButton title={'Stav vozidiel v servise'} onPress={pressHandlerCarDetailsWS}></NormalButton>
         <NormalButton title={'Odhlásiť sa'} onPress={pressHandlerLogout}></NormalButton>
       
       </View>

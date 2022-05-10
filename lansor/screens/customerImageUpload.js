@@ -146,8 +146,7 @@ export default function CustomerImageUpload({ navigation }) {
           </View>
 
           <View style={styles.button}>
-            <Button  title='Objednať vozidlo do servisu' onPress={pressHandlerOrders} />
-            <Button  title='Objednať vozidlo do servisu WS' onPress={pressHandlerOrdersWS} />
+            <Button  title='Objednať vozidlo do servisu' onPress={pressHandlerOrdersWS} />
           </View>
 
           {image && 

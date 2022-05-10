@@ -20,13 +20,15 @@ export default function CustomerProfile({ navigation }) {
     ws.onmessage = (e) => {
       const message = (e.data)
       const techCarsData = JSON.parse(message);
-      console.log(techCarsData);
+      console.log(techCarsData.message);
 
   
 
       try {
         if(techCarsData.information == 'orders'){
-          if(techCarsData.data.message){  //prisla error sprava, nema zakazky
+          console.log('xxxx');
+          if(techCarsData.message){  //prisla error sprava, nema zakazky
+            console.log('yyyy');
             Alert.alert(
               "Žiadne aktívne zákazky",
               "Momentálne nemáte zákazku",
@@ -42,7 +44,7 @@ export default function CustomerProfile({ navigation }) {
         }
 
         if(techCarsData.information == 'history'){
-          if(techCarsData.data.message){  //prisla error sprava, nema zakazky
+          if(techCarsData.message){  //prisla error sprava, nema zakazky
             Alert.alert(
               "Prazdna historia",
               "Nie su evidovane ziadne opravene auta",
@@ -146,12 +148,10 @@ export default function CustomerProfile({ navigation }) {
         <Text> Vaše identifikačné číslo: {technician._id.slice(-5)}</Text>
         
         <View style={styles.button}>
-          <Button title='Moje zákazky' onPress={pressHandlerOdrders} />
-          <Button title='Moje zákazky WS' onPress={pressHandlerOdrdersWS} />
+          <Button title='Moje zákazky' onPress={pressHandlerOdrdersWS} />
         </View>
         <View style={styles.button}>
-          <Button title='História opravených áut' onPress={pressHandlerHistory} />
-          <Button title='História opravených áut  WS' onPress={pressHandlerHistoryWS} />
+          <Button title='História opravených áut' onPress={pressHandlerHistoryWS} />
         </View>
 
         <View style={styles.button}>

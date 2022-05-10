@@ -169,8 +169,7 @@ export default function Register( {navigation}) {
         <TextInput style={styles.input} placeholder="Telefónne číslo*" keyboardType = 'numeric' onChangeText={(value) => setPhoneNumber(value)} />
         <TextInput style={styles.input} placeholder="Email*" onChangeText={(value) => setEmail(value)} />
         <TextInput style={styles.input} placeholder="Heslo*" onChangeText={(value) => setPassword(value)} secureTextEntry={true} />
-        <ConfirmButton title={'Registrovať sa'} onPress={pressHandlerRegister}></ConfirmButton>
-        <ConfirmButton title={'Registrovať sa WS'} onPress={pressHandlerRegisterWS}></ConfirmButton>
+        <ConfirmButton title={'Registrovať sa'} onPress={pressHandlerRegisterWS}></ConfirmButton>
         <NormalButton title={'Späť na úvod'} onPress={pressHandlerBack}></NormalButton>
         
       </View>
