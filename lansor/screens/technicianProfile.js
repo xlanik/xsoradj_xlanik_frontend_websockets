@@ -22,6 +22,7 @@ export default function CustomerProfile({ navigation }) {
       const techCarsData = JSON.parse(message);
       console.log(techCarsData);
 
+
       try {
         if(techCarsData.information == 'orders'){
           if(techCarsData.data.message){  //prisla error sprava, nema zakazky
