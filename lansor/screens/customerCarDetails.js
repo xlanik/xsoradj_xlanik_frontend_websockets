@@ -30,10 +30,14 @@ export default function CustomerCarDetails( {navigation} ) {
 
   const deleteCarAddToRepairedWS = async (car) => {
 
+    const carUpdate = {
+      id: car._id
+    }
+
     ws.send(JSON.stringify({ 
       information: 'CarsID',
       method: 'DELETE',
-      data: JSON.stringify(car._id)
+      data: JSON.stringify(carUpdate)
     }));
 
     const repairedCar = {

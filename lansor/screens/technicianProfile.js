@@ -26,9 +26,9 @@ export default function CustomerProfile({ navigation }) {
 
       try {
         if(techCarsData.information == 'orders'){
-          console.log('xxxx');
+         
           if(techCarsData.message){  //prisla error sprava, nema zakazky
-            console.log('yyyy');
+         
             Alert.alert(
               "Žiadne aktívne zákazky",
               "Momentálne nemáte zákazku",
