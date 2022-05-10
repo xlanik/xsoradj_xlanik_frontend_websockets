@@ -1,10 +1,83 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Button, Alert, Image} from 'react-native';
 
+var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 export default function CustomerProfile({ navigation }) {
 
   const technician = navigation.getParam('loginTechnician')
   
+  useEffect(() => {
+    initiateSocketConnection()
+  }, [])
+
+  const initiateSocketConnection = () => {
+
+    ws.onopen = () => {
+      console.log("Soket otvoreny");
+    }
+
+    // Ran when teh app receives a message from the server
+    ws.onmessage = (e) => {
+      const message = (e.data)
+      const techCarsData = JSON.parse(message);
+      console.log(techCarsData);
+
+      try {
+        if(techCarsData.information == 'orders'){
+          if(techCarsData.data.message){  //prisla error sprava, nema zakazky
+            Alert.alert(
+              "Žiadne aktívne zákazky",
+              "Momentálne nemáte zákazku",
+              [
+                { text: "OK", onPress: () => console.log("Ziadne zakazky alert") }
+              ]
+            );
+
+            return;
+          }
+          
+          navigation.navigate('TechnicianOrders', {'': techCarsData.data.technicianCars});   //musi sa to zabalit do objektu....
+        }
+
+        if(techCarsData.information == 'history'){
+          if(techCarsData.data.message){  //prisla error sprava, nema zakazky
+            Alert.alert(
+              "Prazdna historia",
+              "Nie su evidovane ziadne opravene auta",
+              [
+                { text: "OK", onPress: () => console.log("Prazdna historia alert") }
+              ]
+            );
+  
+            return;
+          }
+          
+          navigation.navigate('TechnicianOrders', {'': techCarsData.data});   //musi sa to zabalit do objektu....
+
+        }
+  
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
+  const pressHandlerOdrdersWS = async () => {
+    
+    ws.send(JSON.stringify({ 
+      information: 'TechniciansCarsID',
+      data: JSON.stringify(technician._id)
+    }));
+    return;
+  }
+
+  const pressHandlerHistoryWS = async () => {
+    ws.send(JSON.stringify({ 
+      information: 'RepairedCars',
+      method: 'GET'
+    }));
+    return;
+  }
 
   const pressHandlerOdrders = async () => {
     try {
@@ -72,9 +145,11 @@ export default function CustomerProfile({ navigation }) {
         
         <View style={styles.button}>
           <Button title='Moje zákazky' onPress={pressHandlerOdrders} />
+          <Button title='Moje zákazky WS' onPress={pressHandlerOdrdersWS} />
         </View>
         <View style={styles.button}>
           <Button title='História opravených áut' onPress={pressHandlerHistory} />
+          <Button title='História opravených áut  WS' onPress={pressHandlerHistoryWS} />
         </View>
 
         <View style={styles.button}>

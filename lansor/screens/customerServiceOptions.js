@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Button, Switch, TextInput, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
-
+var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 export default function CustomerServiceOptions({ navigation }) {
 
     const [oilChange, setOilChange] = useState(false);

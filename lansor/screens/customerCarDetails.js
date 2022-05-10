@@ -1,11 +1,67 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import CustomerCarDetailsItem from '../components/customerCarDetailsItem';
+
+var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 
 export default function CustomerCarDetails( {navigation} ) {
   
   const customersCars = navigation.getParam('');
   
+  useEffect(() => {
+    initiateSocketConnection()
+  }, [])
+
+  const initiateSocketConnection = () => {
+    ws.onopen = () => {
+      console.log("Soket otvoreny");
+    }
+
+    // Ran when teh app receives a message from the server
+    ws.onmessage = (e) => {
+      const message = (e.data)
+      const carData = JSON.parse(message);
+      console.log(carData);
+
+      if(carData.NewRepairedCar) navigation.navigate('CustomerProfile');
+    }
+  }
+
+
+  const deleteCarAddToRepairedWS = async (car) => {
+
+    ws.send(JSON.stringify({ 
+      information: 'CarsID',
+      method: 'DELETE',
+      data: JSON.stringify(car._id)
+    }));
+
+    const repairedCar = {
+      customer_id : car.customer_id,
+      technician_id : car.technician_id,
+      brand : car.brand,
+      model : car.model,
+      year : car.year,
+      oilChange : car.oilChange,
+      filterChange : car.filterChange,
+      tireChange : car.tireChange,
+      engineService : car.engineService,
+      number_plate: car.number_plate,
+      description : car.description,
+      state : car.state,
+      last_service: new Date(),
+      image_url : car.image_url
+    }
+
+    ws.send(JSON.stringify({ 
+      information: 'RepairedCars',
+      method: 'POST',
+      data: JSON.stringify(repairedCar)
+    }));
+
+    return;
+  }
+
   const deleteCarAddToRepaired = async (car) => {
 
     try {
@@ -64,6 +120,7 @@ export default function CustomerCarDetails( {navigation} ) {
     return;
   }
 
+
   const pressHandlerConfirmCar = (item) => {
     //console.log(item._id);
 
@@ -72,7 +129,7 @@ export default function CustomerCarDetails( {navigation} ) {
       "Vozidlo bude odstránené a pridané do histórie opravených aut.",
       [
         { text: "Zrušiť", onPress: () => console.log("Zrusenie potvrdenia prevzatia") },
-        { text: "Potvrdiť prevzatie", onPress: () => deleteCarAddToRepaired(item) }
+        { text: "Potvrdiť prevzatie", onPress: () => deleteCarAddToRepairedWS(item) }
       ]
     );
 

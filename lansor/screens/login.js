@@ -9,8 +9,8 @@ import ConfirmButton from '../components/confirmButton';
 //var ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 //var ws = React.useRef(new WebSocket('wss://wslansormtaa.herokuapp.com')).current;
 
-
-var ws = new WebSocket('ws://sheltered-coast-99005.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+//NA XIAMO A1 trebalo v nastaveniach mobilu -> v aplikacie Expo nastavit, ze sa to da zobrazit aj cez ine aplikacie
+var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 export default function Login({ navigation }) {
   //var ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
   const [name, setName] = useState('');
@@ -29,18 +29,9 @@ export default function Login({ navigation }) {
 
   const initiateSocketConnection = () => {
 
-    // When a connection is made to the server, send the user ID so we can track which
-    // socket belongs to which user
+    
     ws.onopen = () => {
-      /*const userCredentials = {
-        name: "zakyy",
-        password: "zak"
-      }
-      ws.send(JSON.stringify({ 
-        information: 'loginCustomer',
-        data: JSON.stringify(userCredentials)
-      }));*/
-      console.log("Login - soket otvoreny");
+      console.log("Soket otvoreny");
     }
 
     // Ran when teh app receives a message from the server
