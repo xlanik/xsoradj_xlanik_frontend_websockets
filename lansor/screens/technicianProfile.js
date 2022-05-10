@@ -22,6 +22,7 @@ export default function CustomerProfile({ navigation }) {
       const techCarsData = JSON.parse(message);
       console.log(techCarsData);
 
+  
 
       try {
         if(techCarsData.information == 'orders'){
@@ -37,7 +38,7 @@ export default function CustomerProfile({ navigation }) {
             return;
           }
           
-          navigation.navigate('TechnicianOrders', {'': techCarsData.data.technicianCars});   //musi sa to zabalit do objektu....
+          navigation.navigate('TechnicianOrders', {'': JSON.parse(techCarsData.data)});   //musi sa to zabalit do objektu....
         }
 
         if(techCarsData.information == 'history'){
@@ -53,7 +54,7 @@ export default function CustomerProfile({ navigation }) {
             return;
           }
           
-          navigation.navigate('TechnicianOrders', {'': techCarsData.data});   //musi sa to zabalit do objektu....
+          navigation.navigate('TechnicianOrderHistory', {'': JSON.parse(techCarsData.data)});   //musi sa to zabalit do objektu....
 
         }
   

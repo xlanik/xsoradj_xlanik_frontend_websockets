@@ -2,41 +2,49 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import TechnicianOrderItem from '../components/technicianOrderItem';
 
+var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 export default function TechnicianOrders( {navigation} ) {
   
   const technicianOrders = navigation.getParam('');
   //console.log(technicianOrders);
+  useEffect(() => {
+    initiateSocketConnection()
+  }, [])
 
-  const updateRepairedStatus = async (id, description) => {
+  const initiateSocketConnection = () => {
 
+    
+    ws.onopen = () => {
+      console.log("Soket otvoreny");
+    }
+
+    // Ran when teh app receives a message from the server
+    ws.onmessage = (e) => {
+      const message = (e.data)
+      const userData = JSON.parse(message);
+      console.log(userData);
+
+      navigation.navigate('TechnicianProfile');
+    }
+  }
+
+  const updateRepairedStatusWS = async (id, description) => {
     const carUpdate = {
       state: "repaired",
       description: description,
+      id: id
     }
     
     console.log(carUpdate);
 
-    const fetchObj= {
-        method: 'PATCH',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(carUpdate)
-    }
+    ws.send(JSON.stringify({ 
+      information: 'CarsID',
+      method: 'PATCH',
+      data: JSON.stringify(carUpdate)
+    }));
 
-    try {
-
-      const response = await fetch(`https://wslansormtaa.herokuapp.com/Cars/${id}`, fetchObj);
-      const updateCarJsonRes = await response.json();
-      console.log(updateCarJsonRes);
-     
-    } catch (error) {
-      console.error(error);
-    }
-
-    navigation.navigate('TechnicianProfile');
   }
+
 
   const pressHandlerRepaired = (item, description) => {
 
@@ -63,7 +71,7 @@ export default function TechnicianOrders( {navigation} ) {
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "Rozumiem", onPress: () => updateRepairedStatus(item._id, description) }
+        { text: "Rozumiem", onPress: () => updateRepairedStatusWS(item._id, description) }
       ])
 
     return;
