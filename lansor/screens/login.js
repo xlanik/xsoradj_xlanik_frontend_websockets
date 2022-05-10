@@ -10,7 +10,8 @@ import ConfirmButton from '../components/confirmButton';
 //var ws = React.useRef(new WebSocket('wss://wslansormtaa.herokuapp.com')).current;
 
 //NA XIAMO A1 trebalo v nastaveniach mobilu -> v aplikacie Expo nastavit, ze sa to da zobrazit aj cez ine aplikacie
-var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+//var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+var ws = new WebSocket('ws://192.168.0.109:3000/')
 export default function Login({ navigation }) {
   //var ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
   const [name, setName] = useState('');
@@ -72,48 +73,6 @@ export default function Login({ navigation }) {
     }));
     return;
   };
-
-  const pressLoginHandle = async () => {
-
-    const userCredentials = {
-      name: name,
-      password: password
-    }
-
-    const fetchObj= {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userCredentials)
-    }
-
-  
-    try {
-      const response = await fetch(`https://lansormtaa.herokuapp.com/login`, fetchObj);
-      const userJsonRes = await response.json();
-      console.log(userJsonRes);
-     
-      //Zistenie podla udajov, ci pokracujeme ako customer alebo technik, alebo boli nespravne udaje
-      if(userJsonRes.loginCustomer) navigation.navigate('CustomerProfile', userJsonRes);
-      if(userJsonRes.loginTechnician) navigation.navigate('TechnicianProfile', userJsonRes);
-      if(userJsonRes.message){
-        Alert.alert(
-          "Nesprávne prihlasovacie údaje",
-          "Prosím skontrolujte správnosť mena a hesla",
-          [
-            { text: "OK", onPress: () => console.log("Zly login alert") }
-          ]
-        );
-      }
-
-    } catch (error) {
-      console.error(error);
-    }
-
-    return;
-  }
 
   return (
     <TouchableWithoutFeedback onPress={() => {

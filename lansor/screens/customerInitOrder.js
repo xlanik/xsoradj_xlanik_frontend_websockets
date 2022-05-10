@@ -3,7 +3,7 @@ import { StyleSheet, View, TextInput, Button,Text, Switch, Alert, FlatList, Scro
 import TechnicianAvailableItem from '../components/technicianAvailableItem';
 
 
-var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+var ws = new WebSocket('ws://192.168.0.109:3000/') 
 export default function CustomerInitOrder({ navigation }) {
 
     const [technicians, setTechnicians] = useState(null)
@@ -15,7 +15,6 @@ export default function CustomerInitOrder({ navigation }) {
     const [technicianID, setTechnicianID] = useState('');
     const [technicianName, setTechnicianName] = useState('náhodný');
 
-
     const cust_id = navigation.getParam("customer_id");
 
     useEffect(() => {
@@ -25,24 +24,22 @@ export default function CustomerInitOrder({ navigation }) {
     const initiateSocketConnection = () => {
     
         
-    ws.onopen = () => {
-        console.log("Soket otvoreny");
-    }
-    
-    // Ran when teh app receives a message from the server
-    ws.onmessage = (e) => {
-      const message = (e.data)
-        const techniciansData = JSON.parse(message);
-        console.log(techniciansData);
-    
-        try {
-            setTechnicians(techniciansData.technicians);
-            
-        } catch (error) {
-            console.error(error);
+        ws.onopen = () => {
+            console.log("Soket otvoreny");
         }
-       
-        }
+        
+        // Ran when teh app receives a message from the server
+        ws.onmessage = (e) => {
+        const message = (e.data)
+            const techniciansData = JSON.parse(message);
+            console.log(techniciansData);
+            try {
+                setTechnicians(techniciansData.technicians);
+                
+            } catch (error) {
+                console.error(error);
+            }
+            }
     }
 
     useEffect(() => {
@@ -57,27 +54,6 @@ export default function CustomerInitOrder({ navigation }) {
             //data: JSON.stringify(userCredentials) data netreba lebo bereme všetkych bez nejakeho parametru atd..
           }));
       }, [])
-
-
-
-    //https://stackoverflow.com/questions/53332321/react-hook-warnings-for-async-function-in-useeffect-useeffect-function-must-ret
-    /*useEffect(() => {
-        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);     //https://stackoverflow.com/questions/58243680/react-native-another-virtualizedlist-backed-container
-        async function fetchTechnicians() {
-            try {
-                let response = await fetch(`https://wslansormtaa.herokuapp.com/technicians`)
-                response = await response.json()
-                //console.log(response);
-                setTechnicians(response);
-                
-            } catch (error) {
-                console.error(error);
-            }
-
-        }
-        fetchTechnicians();
-        
-      }, [])*/
 
       useEffect(() => {
         if(isEnabled == false){

@@ -3,14 +3,10 @@ import { StyleSheet, View, Text, Button, Alert} from 'react-native';
 import NormalButton from '../components/normalButton';
 import ConfirmButton from '../components/confirmButton';
 
-//var ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
-//var ws = React.useRef(new WebSocket('wss://wslansormtaa.herokuapp.com')).current;
-var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+var ws = new WebSocket('ws://192.168.0.109:3000/')
 
 export default function CustomerProfile({ navigation }) {
-  //var ws = new WebSocket('wss://wslansormtaa.herokuapp.com')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
   const customer = navigation.getParam('loginCustomer')
-  //var ws = new WebSocket('ws://192.168.0.109:8082')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
 
   //https://blog.logrocket.com/how-to-implement-websockets-in-react-native/
   //https://reactnative.dev/docs/network
@@ -21,8 +17,6 @@ export default function CustomerProfile({ navigation }) {
 
   const initiateSocketConnection = () => {
 
-    // When a connection is made to the server, send the user ID so we can track which
-    // socket belongs to which user
     ws.onopen = () => {
       console.log("Customer profile - soket otvoreny");
     }
@@ -61,33 +55,6 @@ export default function CustomerProfile({ navigation }) {
       data: JSON.stringify(customer._id)
     }));
     return;
-  }
-
-  const pressHandlerCarDetails = async () => {
-    try {
-
-        const response = await fetch(`https://wslansormtaa.herokuapp.com/CustomerCar/${customer._id}`);
-        const customersCarsJsonRes = await response.json();
-        
-  
-        if(customersCarsJsonRes.message){  //prisla error sprava, nema zakazky
-          Alert.alert(
-            "Žiadne auto v servise",
-            "Momentálne nemáte autá u nás servisované.",
-            [
-              { text: "OK", onPress: () => console.log("Ziadne zakazky alert") }
-            ]
-          );
-
-          return;
-        }
-        
-        navigation.navigate('CustomerCarDetails', {'': customersCarsJsonRes});   //musi sa to zabalit do objektu....
-  
-      } 
-      catch (error) {
-        console.error(error);
-      }
   }
 
   //vytvorenie objektu, kedze ako parameter sa daju posielat iba objekty

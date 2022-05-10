@@ -4,7 +4,7 @@ import NormalButton from '../components/normalButton';
 import ConfirmButton from '../components/confirmButton';
 
 
-var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+var ws = new WebSocket('ws://192.168.0.109:3000/')  
 export default function Register( {navigation}) {
 
   const [name, setName] = useState('');
@@ -18,7 +18,6 @@ export default function Register( {navigation}) {
 
   const initiateSocketConnection = () => {
 
-    
     ws.onopen = () => {
       console.log("Soket otvoreny");
     }
@@ -57,9 +56,6 @@ export default function Register( {navigation}) {
     }
   }
 
-
-
-
   const pressHandlerBack = () => {
     navigation.navigate('Login');
   }
@@ -91,70 +87,6 @@ export default function Register( {navigation}) {
       data: JSON.stringify(userCredentials)
     }));
     return;
-  }
-
-
-
-  const pressHandlerRegister = async () => {
-
-    if(!name || !phoneNumber || !email || !password){ //validacia povinnych poli
-      Alert.alert(
-        "Neúspešná registrácia",
-        "Prosím vyplnte všetky povinné polia",
-        [
-          { text: "OK", onPress: () => console.log("Nevyplnene polia") }
-        ]
-      );
-
-      return;
-    }
-
-    const userCredentials = {
-      name: name,
-      phoneNumber: phoneNumber,
-      email, email,
-      password: password
-    }
-
-    const fetchObj= {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userCredentials)
-    }
-
-    try {
-
-      const response = await fetch(`https://wslansormtaa.herokuapp.com/Customers`, fetchObj);
-      const userJsonRes = await response.json();
-      console.log(userJsonRes.message);
-
-      if(userJsonRes.name) {  //staci ked vrati menoa  viem, ze prebehla okej
-        Alert.alert(
-          "Registrácia úspešná",
-          "Ste presmerovaný na úvodnú stránku",
-          [
-            { text: "OK", onPress: () => console.log("Zly register alert") }
-          ]
-        );
-        navigation.navigate('Login', userJsonRes);
-      } 
-      if(userJsonRes.message){
-        console.log("som tu")
-        Alert.alert(
-          "Neúspešná registrácia",
-          userJsonRes.message,
-          [
-            { text: "OK", onPress: () => console.log("Zly register alert") }
-          ]
-        );
-      }
-
-    } catch (error) {
-      console.error(error);
-    }
   }
 
   return (

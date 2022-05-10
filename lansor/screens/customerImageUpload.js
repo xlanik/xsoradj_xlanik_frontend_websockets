@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react';
 import { StyleSheet, View, Text, Button, Alert,Image} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+var ws = new WebSocket('ws://192.168.0.109:3000/')  
 export default function CustomerImageUpload({ navigation }) {
 
   const [image, setImage] = useState(null);
@@ -77,65 +77,6 @@ export default function CustomerImageUpload({ navigation }) {
       data: JSON.stringify(car)
     }));
     return;
-  }
-
-  const pressHandlerOrders = async () => {
-
-    if(!image){
-      Alert.alert(
-        "Nahrajte fotogragiu auta",
-        "Je to povinná položka pri objednávke",
-        [
-          { text: "Rozumiem", onPress: () => console.log("Nedal fotografiu") }
-        ]
-      );
-
-      return;
-    }
-
-    const car = {
-      customer_id : navigation.getParam("customer_id"),
-      technician_id : navigation.getParam("technician_id"),
-      brand : navigation.getParam("brand"),
-      model : navigation.getParam("model"),
-      year : navigation.getParam("year"),
-      oilChange : navigation.getParam("oilChange"),
-      filterChange : navigation.getParam("filterChange"),
-      tireChange : navigation.getParam("tireChange"),
-      engineService : navigation.getParam("motorService"),
-      number_plate: navigation.getParam("number_plate"),
-      description : navigation.getParam("description"),
-      state : "neopravene",
-      image_url : image,
-    }
-
-    const postObj= {
-      method: 'POST',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(car)
-    }
-
-    //console.log(postObj);
-
-    try {
-      const response = await fetch(`https://wslansormtaa.herokuapp.com/cars`, postObj);
-      const carJsonRes = await response.json();
-      //console.log(carJsonRes);
-    } catch (error) {
-      console.error(error);
-    }
-
-    Alert.alert(
-        "Dokončené",
-        "Objednávka do servisu bola úspešná, ste presmerovaný na profil.",
-        [
-          { text: "OK", onPress: () => console.log("OK Pressed") }
-        ]
-    );
-    navigation.navigate('CustomerProfile');
   }
 
     return (

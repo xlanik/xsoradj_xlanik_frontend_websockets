@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import CustomerCarDetailsItem from '../components/customerCarDetailsItem';
 
-var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+var ws = new WebSocket('ws://192.168.0.109:3000/') 
 
 export default function CustomerCarDetails( {navigation} ) {
   
@@ -26,7 +26,6 @@ export default function CustomerCarDetails( {navigation} ) {
       if(carData.NewRepairedCar) navigation.navigate('CustomerProfile');
     }
   }
-
 
   const deleteCarAddToRepairedWS = async (car) => {
 
@@ -65,65 +64,6 @@ export default function CustomerCarDetails( {navigation} ) {
 
     return;
   }
-
-  const deleteCarAddToRepaired = async (car) => {
-
-    try {
-
-      const response = await fetch(`https://wslansormtaa.herokuapp.com/Cars/${car._id}`, {
-        method: 'DELETE',
-      });
-
-      const updateCarJsonRes = await response.json();
-      console.log(updateCarJsonRes);
-     
-    } catch (error) {
-      console.error(error);
-    }
-
-    const repairedCar = {
-      customer_id : car.customer_id,
-      technician_id : car.technician_id,
-      brand : car.brand,
-      model : car.model,
-      year : car.year,
-      oilChange : car.oilChange,
-      filterChange : car.filterChange,
-      tireChange : car.tireChange,
-      engineService : car.engineService,
-      number_plate: car.number_plate,
-      description : car.description,
-      state : car.state,
-      last_service: new Date(),
-      image_url : car.image_url
-    }
-
-    //console.log(repairedCar);
-
-    const postObj= {
-      method: 'POST',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(repairedCar)
-    }
-
-    //console.log(postObj);
-    
-    try {
-      const response = await fetch(`https://wslansormtaa.herokuapp.com/RepairedCars`, postObj);
-      const carJsonRes = await response.json();
-      console.log(carJsonRes);
-    } catch (error) {
-      console.error(error);
-    }
-
-    navigation.navigate('CustomerProfile');
-    
-    return;
-  }
-
 
   const pressHandlerConfirmCar = (item) => {
     //console.log(item._id);

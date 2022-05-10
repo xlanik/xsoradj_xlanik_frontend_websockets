@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Button, Alert, Image} from 'react-native';
 
-var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+var ws = new WebSocket('ws://192.168.0.109:3000/')   
 export default function CustomerProfile({ navigation }) {
 
   const technician = navigation.getParam('loginTechnician')
@@ -21,8 +21,6 @@ export default function CustomerProfile({ navigation }) {
       const message = (e.data)
       const techCarsData = JSON.parse(message);
       console.log(techCarsData.message);
-
-  
 
       try {
         if(techCarsData.information == 'orders'){
@@ -81,60 +79,6 @@ export default function CustomerProfile({ navigation }) {
       method: 'GET'
     }));
     return;
-  }
-
-  const pressHandlerOdrders = async () => {
-    try {
-
-        const response = await fetch(`https://wslansormtaa.herokuapp.com/TechnicianCars/${technician._id}`);
-        const ordersJsonRes = await response.json();
-        //console.log(ordersJsonRes);
-        
-  
-        if(ordersJsonRes.message){  //prisla error sprava, nema zakazky
-          Alert.alert(
-            "Žiadne aktívne zákazky",
-            "Momentálne nemáte zákazku",
-            [
-              { text: "OK", onPress: () => console.log("Ziadne zakazky alert") }
-            ]
-          );
-
-          return;
-        }
-        
-        navigation.navigate('TechnicianOrders', {'': ordersJsonRes});   //musi sa to zabalit do objektu....
-  
-      } catch (error) {
-        console.error(error);
-      }
-  }
-
-  const pressHandlerHistory = async () => {
-    try {
-
-        const response = await fetch(`https://wslansormtaa.herokuapp.com/RepairedCars`);
-        const oderHistoryJsonRes = await response.json();
-        //console.log(oderHistoryJsonRes);
-       
-  
-        if(oderHistoryJsonRes.message){  //prisla error sprava, nema zakazky
-          Alert.alert(
-            "Žiadne aktívne zákazky",
-            "Momentálne nemáte zákazku",
-            [
-              { text: "OK", onPress: () => console.log("Ziadne zakazky alert") }
-            ]
-          );
-
-          return;
-        }
-
-        navigation.navigate('TechnicianOrderHistory', {'': oderHistoryJsonRes});
-  
-      } catch (error) {
-        console.error(error);
-      }
   }
 
   const pressHandlerLogout = () => {  //skuska na tie data

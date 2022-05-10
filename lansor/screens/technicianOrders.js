@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import TechnicianOrderItem from '../components/technicianOrderItem';
 
-var ws = new WebSocket('ws://wslansormtaa.herokuapp.com/')   //trebalo to dat na klasu, inac to pri vyplnenych udajov neslo posielat ;)
+var ws = new WebSocket('ws://192.168.0.109:3000/')  
 export default function TechnicianOrders( {navigation} ) {
   
   const technicianOrders = navigation.getParam('');
@@ -13,7 +13,6 @@ export default function TechnicianOrders( {navigation} ) {
 
   const initiateSocketConnection = () => {
 
-    
     ws.onopen = () => {
       console.log("Soket otvoreny");
     }
