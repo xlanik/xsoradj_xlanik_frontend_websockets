@@ -36,7 +36,7 @@ export default function Login({ navigation }) {
       console.log("Soket otvoreny");
     }
 
-    // Ran when teh app receives a message from the server
+    // ak pride sprava z backendu
     ws.onmessage = (e) => {
       const message = (e.data)
       const userData = JSON.parse(message);
@@ -55,9 +55,8 @@ export default function Login({ navigation }) {
             ]
           );
         }
-  
       } catch (error) {
-        console.error(error);
+          console.error(error);
       }
     }
   }
